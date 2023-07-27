@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 80
+inline-quotes = single
+exclude =
+    /venv/,
+    */venv/,
+    */migrations/
+extend-exclude = .git
+ignore =
+    # Line break occurred before a binary operator
+    W503,
+    # Missing docstrings
+    D100,D101,D102,D103,D104,D105,D106,D107,
+    # First line should be in imperative mood
+    D401
