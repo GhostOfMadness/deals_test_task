@@ -1,4 +1,5 @@
 Django==4.2.3
 django-admin-rangefilter==0.10.0
 djangorestframework==3.14.0
+pandas==2.0.3
 python-dotenv==1.0.0

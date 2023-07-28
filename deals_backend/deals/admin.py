@@ -9,7 +9,7 @@ from .models import Deal
 class DealAdmin(admin.ModelAdmin):
     """Конфиг админ-зоны для модели Deal."""
 
-    list_display = ('customer', 'item', 'total', 'quantity', 'date')
+    list_display = ('pk', 'customer', 'item', 'total', 'quantity', 'date')
     search_fields = ('customer', 'item')
     list_filter = (
         ('date', DateTimeRangeFilterBuilder(title='Дата')),

@@ -32,5 +32,5 @@ class Deal(models.Model):
         return (
             f'Покупатель - {self.customer}, '
             f'сумма - {self.total}, '
-            f'дата - {self.date.strftime("%Y-%m-%d %H-%M-%S")}',
+            f'дата - {self.date.strftime("%Y-%m-%d %H-%M-%S")}'
         )
