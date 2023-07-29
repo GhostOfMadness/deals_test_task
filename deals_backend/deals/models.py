@@ -6,60 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
-# class DealManager(models.Manager):
-#     """Менеджер для работы с объектами модели Deal."""
-
-#     def top_five_customers(self):
-#         """Топ 5 покупателей по общей сумме покупок."""
-#         return self.values(
-#             'customer',
-#         ).annotate(
-#             spent_money=models.Sum('total'),
-#         ).order_by(
-#             '-spent_money',
-#         ).values_list(
-#             'customer', flat=True,
-#         )[:5]
-
-#     def items_purchased_by_top_five_customers(self):
-#         """Товары, которые купили минимум 2 из топ-5 покупателей."""
-#         return self.filter(
-#             customer__in=self.top_five_customers(),
-#         ).values(
-#             'item',
-#         ).annotate(
-#             customer_count=models.Count('customer', distinct=True),
-#         ).filter(
-#             customer_count__gte=2,
-#         ).values_list(
-#             'item', flat=True,
-#         )
-
-#     def top_five_customers_with_items(self):
-#         items_list = self.items_purchased_by_top_five_customers()
-#         top_customers_with_items = self.filter(
-#             customer__in=models.Subquery(self.top_five_customers()),
-#         ).annotate(
-#             spent_money=models.Window(
-#                 expression=models.Sum('total'),
-#                 partition_by=models.F('customer'),
-#             ),
-#         ).values(
-#             'customer', 'spent_money', 'item',
-#         ).distinct().order_by(
-#             '-spent_money',
-#         )
-#         result = {}
-#         for customer in top_customers_with_items:
-#             if not customer['customer'] in result.keys():
-#                 result[customer['customer']] = {
-#                     'spent_money': customer['spent_money'],
-#                     'gems': [],
-#                 }
-#             if customer['item'] in items_list:
-#                 result[customer['customer']]['gems'].append(customer['item'])
-#         return result
-
 
 class GemstoneManager(models.Manager):
     """Менеджер для работы с объектами модели Gemstone."""
