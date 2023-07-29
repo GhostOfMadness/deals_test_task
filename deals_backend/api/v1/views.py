@@ -3,7 +3,7 @@ from rest_framework import generics, parsers, status
 from rest_framework.response import Response
 
 from django.contrib.auth import get_user_model
-from django.db.models import Sum, Prefetch
+from django.db.models import Prefetch, Sum
 
 from deals.models import Deal, Gemstone
 

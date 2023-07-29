@@ -36,5 +36,6 @@ class DealAdmin(admin.ModelAdmin):
     search_fields = ('customer', 'item')
     list_filter = (
         ('date', DateTimeRangeFilterBuilder(title='Дата')),
-        DealItemFilter, DealCustomerFilter,
+        DealItemFilter,
+        DealCustomerFilter,
     )

@@ -11,7 +11,16 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CSVFileValidator:
-    """Валидатор поступающего csv-файла."""
+    """
+    Валидатор поступающего csv-файла.
+
+    Проверяет:
+    - расширение файла (.csv или .CSV);
+    - возможность извлечения параметров csv-файла (тип разделителей,
+    кавычек и т.д.);
+    - заголовки файла;
+    - типы данных столбцов.
+    """
 
     FILE_EXTENSIONS: ClassVar[tuple[str]] = ('.csv', '.CSV')
     FILE_COLUMN_NAME_DTYPE_MAP: ClassVar[dict[str, Any]] = {
