@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'admin_auto_filters',
     'rest_framework',
     'rangefilter',
+    'users.apps.UsersConfig',
     'deals.apps.DealsConfig',
     'api.apps.ApiConfig',
 ]
@@ -121,3 +122,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
 }
+
+# Custom User model
+AUTH_USER_MODEL = 'users.CustomUser'

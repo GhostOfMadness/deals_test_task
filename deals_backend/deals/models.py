@@ -61,11 +61,27 @@ User = get_user_model()
 #         return result
 
 
+class GemstoneManager(models.Manager):
+    """Менеджер для работы с объектами модели Gemstone."""
+
+    def items_purchased_by_top_customers(self):
+        """Камни, которые купили минимум 2 из топ-5 покупателей."""
+        return self.filter(
+            users__in=User.objects.top_five_customers(),
+        ).annotate(
+            count=models.Count('name'),
+        ).filter(
+            count__gte=2,
+        )
+
+
 class Gemstone(models.Model):
     """Модель описания драгоценного камня."""
 
     name = models.CharField(_('Название'), max_length=255, unique=True)
     users = models.ManyToManyField(User, related_name='gemstones')
+
+    objects = GemstoneManager()
 
     class Meta:
         ordering = ['name']
@@ -105,8 +121,6 @@ class Deal(models.Model):
         validators=[number_validator],
     )
     date = models.DateTimeField()
-
-    # objects = DealManager()
 
     class Meta:
         ordering = ['-date']

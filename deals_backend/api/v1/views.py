@@ -3,13 +3,37 @@ from rest_framework import generics, parsers, status
 from rest_framework.response import Response
 
 from django.contrib.auth import get_user_model
+from django.db.models import Sum, Prefetch
 
 from deals.models import Deal, Gemstone
 
-from .serializers import FileUploadSerializer
+from .serializers import FileUploadSerializer, TopCustomersSerializer
 
 
 User = get_user_model()
+
+
+class TopCustomersView(generics.ListAPIView):
+    """Возвращает список топ-5 покупателей по обшей сумме покупок."""
+
+    queryset = User.objects.annotate(
+        spent_money=Sum('deals__total', default=0),
+    ).prefetch_related(
+        Prefetch(
+            'gemstones',
+            queryset=Gemstone.objects.items_purchased_by_top_customers(),
+        ),
+    ).order_by(
+        '-spent_money',
+    )[:5]
+    serializer_class = TopCustomersSerializer
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        return Response(
+            {'response': response.data},
+            status=response.status_code,
+        )
 
 
 class FileUploadView(generics.CreateAPIView):
@@ -18,7 +42,7 @@ class FileUploadView(generics.CreateAPIView):
     parser_classes = [parsers.MultiPartParser, parsers.FormParser]
     serializer_class = FileUploadSerializer
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             file_obj = serializer.validated_data['deals']
@@ -33,7 +57,7 @@ class FileUploadView(generics.CreateAPIView):
                 )
                 Gemstone.users.through.objects.get_or_create(
                     gemstone=item,
-                    user=customer,
+                    customuser=customer,
                 )
                 row['customer'] = customer
                 row['item'] = item
