@@ -7,7 +7,7 @@ from .models import Deal, Gemstone
 
 
 class GemstoneUserInline(admin.TabularInline):
-    """Конфиг для отображения ингредиентов на странице рецепта."""
+    """Конфиг для отображения пользователей на странице товара."""
 
     model = Gemstone.users.through
     extra = 1
