@@ -1,6 +1,7 @@
 Django==4.2.3
 django-admin-autocomplete-filter==0.7.1
 django-admin-rangefilter==0.10.0
+django-query-counter==0.3.0
 djangorestframework==3.14.0
 drf-yasg==1.21.7
 gunicorn==21.2.0
